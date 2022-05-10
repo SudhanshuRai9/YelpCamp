@@ -6,6 +6,7 @@ const express        = require('express'),
       passport       = require('passport'),
       LocalStrategy  = require('passport-local'),
       methodOverride = require('method-override'),
+      moment         = require('moment'),
       Campground     = require('./models/campground'),
       Comment        = require('./models/comment'),
       User           = require('./models/user'),
@@ -24,11 +25,13 @@ mongoose.connect(DB).then(() => {
     console.log(`Connection Successful!`);
 }).catch((err) => console.log(err));
 
+moment().format();
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride('_method'));
 app.use(flash());
+app.locals.moment = require('moment');
 // seedDB(); // seed the database
 
 // PASSPORT CONFIG

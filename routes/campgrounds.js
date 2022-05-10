@@ -1,8 +1,10 @@
 const express    = require('express'),
       router     = express.Router(),
+      moment     = require('moment'),
       Campground = require('../models/campground'),
       middleware = require('../middleware/index.js');
 
+moment().format();
 // INDEX - show all campgrounds
 
 router.get("/", function(req, res) {
