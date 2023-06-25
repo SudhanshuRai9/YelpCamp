@@ -19,7 +19,7 @@
                 <p id="errorElement"></p>
                 <input type="hidden" value="<%= campground._id %>" id="campground_id">
                 <div class="mb-2">
-                    <textarea class="form-control" name="updated_desc" rows="3"><%= campground.desc %></textarea>
+                    <textarea class="form-control" name="updated_desc" rows="3" placeholder="Please enter at least 10 characters" minlength="10"><%= campground.desc %></textarea>
                 </div>                
                 <div class="mb-2">
                     <button class="btn btn-lg btn-primary col-12" id="editButton">Submit</button>

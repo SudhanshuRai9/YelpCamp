@@ -76,8 +76,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), async function(r
         }
     }
     catch(err) {
-        console.log("Cloudinary error -> ", err);
-        res.status(400).json('Could not upload to cloudinary!');
+        const error = 'All fields are mandatory!';
+        res.status(400).json({ error });
     }
 });
   

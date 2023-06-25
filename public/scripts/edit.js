@@ -29,7 +29,6 @@ const handleFormSubmit = async (event) => {
     .then(async (response) => {
         if (response.ok) {
             // Redirect the user to the "/campgrounds" page
-            console.log("Ok response -> ", await response.json());
             window.location.href = "/campgrounds";
         } else {
             // Handle error response
