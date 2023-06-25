@@ -2,26 +2,29 @@
 
 <div class="container">
         <h1 style="text-align: center; margin-top: 2rem;">Create a new Campground</h1>
-        <div style="width: 30%; margin: 20px auto">
-            <form action="/campgrounds" method="POST">
+        <div style="width: 40%; margin: 20px auto">
+            <form action="/campgrounds" method="POST" enctype="multipart/form-data" id="campgroundForm">
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="name" placeholder="name">
+                    <input class="form-control" type="text" name="name" placeholder="Name">
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="number" name="price" placeholder="price" min="0.00" step="0.01">
+                    <input class="form-control" type="number" name="price" placeholder="Price" min="0.00" step="0.01">
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
+                    <input class="form-control" type="file" name="image" accept="image/*">
+                </div>
+                <p id="errorElement"></p>
+                <div class="mb-2">
+                    <textarea class="form-control" name="desc" placeholder="Description" rows="3"></textarea>
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="desc" placeholder="description">
-                </div>
-                <div class="mb-2">
-                    <button class="btn btn-lg btn-primary col-12">Submit</button>
+                    <button class="btn btn-lg btn-primary col-12" id="submitButton">Submit</button>
                 </div>
             </form>
             <a href="/campgrounds">Go Back</a>
         </div>
 </div>
+
+<script src="/scripts/new.js"></script>
 
 <%- include('../partials/footer') %>

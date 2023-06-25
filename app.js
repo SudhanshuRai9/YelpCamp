@@ -1,16 +1,12 @@
 const express        = require('express'),
       app            = express(),
-      bodyParser     = require('body-parser'),
       mongoose       = require('mongoose'),
       flash          = require('connect-flash'),
       passport       = require('passport'),
       LocalStrategy  = require('passport-local'),
       methodOverride = require('method-override'),
       moment         = require('moment'),
-      Campground     = require('./models/campground'),
-      Comment        = require('./models/comment'),
       User           = require('./models/user'),
-      seedDB         = require('./seeds'),
       port           = process.env.PORT || 3000,
       host           = process.env.IP;
 
@@ -19,20 +15,21 @@ const commentRoutes    = require('./routes/comments'),
       campgroundRoutes = require('./routes/campgrounds'),
       indexRoutes      = require('./routes/index');
 
-// mongoose.connect("mongodb://localhost/yelp_camp");
-const DB = "mongodb+srv://sudhanshu:sudh@yelpcamp.o1i0o.mongodb.net/yelp_camp?retryWrites=true&w=majority";
+require("dotenv").config();
+
+const DB = process.env.DB_URI;
 mongoose.connect(DB).then(() => {
     console.log(`Connection Successful!`);
 }).catch((err) => console.log(err));
 
 moment().format();
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride('_method'));
 app.use(flash());
 app.locals.moment = require('moment');
-// seedDB(); // seed the database
 
 // PASSPORT CONFIG
 app.use(require('express-session')({
@@ -45,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());     // Both of these methods, serializeUser and deserializeUser are 
+passport.serializeUser(User.serializeUser());     // Both of these methods, serializeUser and deserializeUser are required
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {

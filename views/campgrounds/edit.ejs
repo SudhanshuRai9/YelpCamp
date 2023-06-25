@@ -2,26 +2,33 @@
 
 <div class="container">
         <h1 style="text-align: center; margin-top: 2rem;">Edit <%= campground.name %></h1>
-        <div style="width: 30%; margin: 20px auto">
-            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+        <div style="width: 40%; margin: 20px auto">
+            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data" id="editForm">
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>">
+                    <input class="form-control" type="text" name="updated_name" value="<%= campground.name %>">
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="number" name="campground[price]" value="<%= campground.price %>" placeholder="price" min="0.00" step="0.01">
+                    <input class="form-control" type="number" name="updated_price" value="<%= campground.price %>" placeholder="price" min="0.00" step="0.01">
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>">
+                    <img src="<%= campground.image %>" alt="Image" width="100%" id="previewImage">
                 </div>
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="campground[desc]" value="<%= campground.desc %>">
+                    <input class="form-control" type="file" name="updated_image" accept="image/*" id="imageInput" value="<%= campground.image_name %>">
                 </div>
+                <p id="errorElement"></p>
+                <input type="hidden" value="<%= campground._id %>" id="campground_id">
                 <div class="mb-2">
-                    <button class="btn btn-lg btn-primary col-12">Submit</button>
+                    <textarea class="form-control" name="updated_desc" rows="3"><%= campground.desc %></textarea>
+                </div>                
+                <div class="mb-2">
+                    <button class="btn btn-lg btn-primary col-12" id="editButton">Submit</button>
                 </div>
             </form>
             <a href="/campgrounds/<%= campground._id %>">Go Back</a>
         </div>
 </div>
+
+<script src="/scripts/edit.js"></script>
 
 <%- include('../partials/footer') %>

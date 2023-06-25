@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
-// SCHEMA SETUP
 
+// SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
-    name: String,
-    price: String,
-    image: String,
-    desc: String,
+    name: { type: String, required: true },
+    price: { type: String, required: true },
+    image: { type: String, required: true },
+    image_id: { type: String, required: true },
+    image_name: { type: String, required: true },
+    desc: { type: String, required: true },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -19,6 +21,8 @@ const campgroundSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ]
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);
