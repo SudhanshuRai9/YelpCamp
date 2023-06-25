@@ -11,9 +11,9 @@
 
     <div class="row text-center" style="display: flex; flex-wrap: wrap;">
         <% campgrounds.forEach(function(campground) { %>
-            <div class="col-md-4 col-sm-6">
-                <div class="img-thumbnail" style="margin: 1rem 0;">
-                    <img src="<%= campground.image %>" class="img-fluid rounded">
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="img-thumbnail d-flex flex-column" style="margin: 1rem 0; height: 100%;">
+                    <img src="<%= campground.image %>" class="img-fluid rounded" style="flex: 1;" alt="campground-image">
                     <div class="figure-caption text-dark fs-5 mb-1">
                         <figcaption><%= campground.name %></figcaption>
                     </div>
