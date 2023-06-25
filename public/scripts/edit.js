@@ -33,7 +33,6 @@ const handleFormSubmit = async (event) => {
         } else {
             // Handle error response
             const data = await response.json();
-            console.log("Not Ok response -> ", data);
             const errorMessage = data.error;
             errorElement.innerText = errorMessage;
             errorElement.style.color = 'red';

@@ -27,9 +27,12 @@ router.get("/", function(req, res) {
 router.post("/", middleware.isLoggedIn, upload.single('image'), async function(req, res) {
     const { name, price, desc } = req.body;
     const file = req.file;
-    if(!file) {
-        res.status(500).send('Image not found');
+    if(!name || !price || !file || !desc) {
+        fs.unlinkSync(file.path);
+        res.status(400).json({ error: 'All fields are mandatory!' });
+        return;
     }
+
     let validFileType = false;
     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
         validFileType = true;
@@ -62,22 +65,20 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), async function(r
                     fs.unlinkSync(file.path);
                     res.status(201).send(newlyCreated);
                 } catch (error) {
-                    console.log("Mongo error->", err);
-                    res.status(500).send(err);
+                    console.log("Mongo error ->", err);
+                    res.status(500).json({ error: 'Database error' });
                 }
                 
             } else {
-                res.status(500).json('Could not be uploaded on cloudinary');
+                res.status(500).json({ error: 'Could not be uploaded on cloudinary' });
             }
         } else {
-            const error = 'Invalid file type';
             fs.unlinkSync(file.path);
-            res.status(400).json({ error });
+            res.status(400).json({ error: 'Invalid File Type!' });
         }
     }
     catch(err) {
-        const error = 'All fields are mandatory!';
-        res.status(400).json({ error });
+        res.status(500).json({ error: 'Server error' });
     }
 });
   
@@ -118,6 +119,11 @@ router.get("/:id/edit", middleware.checkCampgroundOwner, (req, res) => {
 router.put("/:id", middleware.checkCampgroundOwner, upload.single('updated_image'), async (req, res) => {
     const { updated_name, updated_price, updated_desc } = req.body;
     const file = req.file;
+    if(!updated_name || !updated_price || !updated_desc) {
+        res.status(400).json({ error: 'All fields are mandatory!' });
+        return;
+    }
+
     const campgroundId = req.params.id;
   
     try {
@@ -159,10 +165,9 @@ router.put("/:id", middleware.checkCampgroundOwner, upload.single('updated_image
         // Save the updated campground
         const updatedCampground = await existingCampground.save();
   
-        res.status(200).json(updatedCampground);
+        res.status(200).send(updatedCampground);
     } catch (error) {
-        console.error('Error updating campground:', error);
-        res.status(500).json({ error: 'Error updating campground' });
+        res.status(400).json({ error: 'Error updating campground' });
     }
 });
 

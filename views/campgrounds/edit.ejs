@@ -5,7 +5,7 @@
         <div style="width: 40%; margin: 20px auto">
             <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data" id="editForm">
                 <div class="mb-2">
-                    <input class="form-control" type="text" name="updated_name" value="<%= campground.name %>">
+                    <input class="form-control" type="text" name="updated_name" value="<%= campground.name %>" placeholder="name">
                 </div>
                 <div class="mb-2">
                     <input class="form-control" type="number" name="updated_price" value="<%= campground.price %>" placeholder="price" min="0.00" step="0.01">
@@ -19,7 +19,7 @@
                 <p id="errorElement"></p>
                 <input type="hidden" value="<%= campground._id %>" id="campground_id">
                 <div class="mb-2">
-                    <textarea class="form-control" name="updated_desc" rows="3" placeholder="Please enter at least 10 characters" minlength="10"><%= campground.desc %></textarea>
+                    <textarea class="form-control" name="updated_desc" rows="3" placeholder="Description"><%= campground.desc %></textarea>
                 </div>                
                 <div class="mb-2">
                     <button class="btn btn-lg btn-primary col-12" id="editButton">Submit</button>
